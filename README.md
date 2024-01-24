@@ -2,4 +2,5 @@
 
 Author(s): **Mohammad Imran Hossain**, Muhammad Zain Amin
 <br>University of Girona (Spain), Erasmus Mundus Joint Master in Medical Imaging and Applications
- 
+
+**Abstract:** The process of image registration not only aids in diagnosing directly from the aligned images but also significantly impacts the performance of algorithms supporting medical imaging diagnosis. This project used inspiratory and expiratory Breath-Hold CT image pairs from the COPDgene study repository. Our experimentation focused on various aspects of the registration framework, including the similarity metric, geometric transformation, interpolation, and resolutions. By preprocessing intensities, we reduced variations across images, enhancing comparability and facilitating easier image registration. Utilizing Elastix and Transformix computer software, we performed intensity-based registrations (rigid and non-rigid) on unsegmented and segmented lung structures. By defining the region of interest and eliminating non-essential areas, our approach yielded an average mean TRE (Target Registration Error) of **2.08 ± 2.26 mm**, showcasing the effectiveness of our approach and fine-tuned parameters. Furthermore, using VoxelMorph, we obtained an average mean TRE of **2.18 ± 2.74 mm** for the same cases.
