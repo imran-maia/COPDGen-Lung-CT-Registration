@@ -50,9 +50,61 @@ The methodology for Lung Computed Tomography (CT) image registration involves a 
 The comprehensive segmentation workflow is visually illustrated in Figure 2, providing a clear guide to the intricate steps involved.
 
 <p align="center">
-  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/9e835a4d-e931-407f-bf13-f582ce202146" width="700" alt="Pre-processed Image">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/9e835a4d-e931-407f-bf13-f582ce202146" width="600" alt="Pre-processed Image">
 </p>
 <p align="center">Figure 2: Proposed Pipeline for Image Pre-processing and Lung Segmentation.</p>
 
 ## Intensity Based Registration
+Registration methodologies that use voxel or pixel intensity values are commonly known as intensity-based. The main idea of intensity-based image registration is to iteratively search for the geometric transformation that optimizes a similarity measure, between the fixed image and the transformed moving image. In this project, we have used ***elastix-transformix*** tools developed by SimpleITK for performing intensity-based image registration. Our proposed pipeline of lung CT registration based on elastix-transformix consists of several steps shown in Figure 3.
 
+### 1. Elastix 
+Elastix is a robust platform for intensity-based image registration, employing various transformations. It iteratively enhances the similarity metric between fixed (inhale) and moving (exhale) images to achieve optimal transformation. Notably, Elastix supports multi-resolution registration using image pyramids and allows customization of key components, including interpolators, optimizers, metrics, iteration counts, and spatial samples.
+
+- Initiation with pre-processing and segmentation of fixed and moving lung CT images.
+- Segmented images are input into Elastix with predefined registration parameters.
+- Elastix outputs the registered image and transform parameters, pivotal for generating precise landmarks using Transformix.
+
+### 2. Registration Parameter
+In the context of elastix-based image registration, the parameter file is a critical element for successful outcomes. It encodes the specific transformation instructions required to register the moving (exhale) image with the fixed (inhale) image accurately. For chest CT images, particularly for lung registration, the Elastix Model Zoo offers a variety of parameter files. In this project, three-parameter files—**Par007, Par0011, and Par0056**—were identified as potentially suitable. These were selected based on their initial compatibility with the task requirements
+
+### 3. Transformix
+In deformable image registration using Elastix, Transformix plays a crucial role. After registering inhale and exhale images with different parameter files, Transformix transforms inhale-phase landmarks, aligning them with exhale-phase landmarks. The process utilizes Elastix-determined parameters, adjusting inhale landmarks to align precisely with the target, either an exhale-phase image or another point in a dynamic sequence. The transformation ensures accurate alignment by registering the moving exhale lung image against the fixed inhale lung image, projecting coordinates internally for precision.
+<br>
+
+<p align="center">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/2b96e46b-6438-4b82-8f18-1783a7c59f81" width="900" alt="Pre-processed Image">
+</p>
+<p align="center">Figure 3: Proposed Pipeline for Intensity-Based Registration Using elastix-transformix.</p>
+
+## Deep Learning-Based Registration
+
+Contrary to intensity-based registration methods, recent attention from researchers has been drawn towards learning-based approaches utilizing neural networks. One such approach is VoxelMorph, which operates as a deep learning model without requiring supervised information for registration.
+
+### 1. Dataset and Preprocessing
+- Used COPD1-COPD4 datasets, split 75:25 for training and testing.
+- Standardized inputs by resizing all sample volumes to (256 × 256 × 128) before utilizing them in the VoxelMorph network.
+
+### 2. VoxelMorph Architecture
+- VoxelMorph employs a convolutional neural network (CNN) with a U-Net-like architecture.
+- The model represents a function gθ (F, M ) = φ, where φ is a registration field, and θ denotes the learnable parameters of g.
+- For each voxel p ∈ ω, φ(p) denotes a location, managing significant displacements within the registration field.
+
+### 3. Experiment Setup
+- Utilized Keras with TensorFlow on Google Colab with a V100 GPU and 16GB RAM.
+- Custom data generator processed fixed (Inhale) and moving (Exhale) image volumes, producing a concatenated tensor.
+- The output of the network was the registration field φ.
+
+### 4. Training Process
+- Involved a two-part loss function: maximizing a similarity metric between fixed and moving images and smoothing the registration field.
+- Experimented with similarity metrics such as Mean Squared Error (MSE) and Normalized Cross-Correlation (NCC).
+
+### 5. Experimental Rounds
+Two rounds of experiments were conducted with VoxelMorph:
+1. Applied VoxelMorph directly on unprocessed image volumes.
+2. Aligned moving images to fixed ones using Elastix before implementing VoxelMorph’s local non-linear registration.
+
+
+<p align="center">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/e7e05eea-72cd-4a9b-828d-c60bac5a4daa" width="800" alt="Pre-processed Image">
+</p>
+<p align="center">Figure 4: Proposed Pipeline for Deep Learning Based Registration Using VoxelMorph.</p>
