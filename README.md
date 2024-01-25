@@ -13,3 +13,46 @@ The dataset, COPDgene, used for the lung CT image registration challenge is a pu
   <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/d2192951-a00c-4fa2-9914-ee9d68289698" width="500" alt="Pre-processed Image">
 </p>
 <p align="center">Figure 1: The Exhale eBH-CT (Left) Slice and The Inhale iBH-CT (Right) Slice of COPD1 Image with Corresponding Landmark Points.</p>
+
+# Methodology
+
+The methodology for Lung Computed Tomography (CT) image registration involves a meticulous process to accurately align inspiratory and expiratory CT image pairs. Employing both intensity-based and deep learning approaches, our study places particular emphasis on robust pre-processing and lung segmentation techniques.
+
+## Pre-processing and Lung Segmentation
+
+### 1. Metadata Extraction and NIfTI Format Conversion
+   - Detailed metadata, including image dimensions, voxel spacing, mean, and standard deviation of displacement, is extracted during pre-processing.
+   - The SimpleITK library is utilized for effective conversion to the standardized NIfTI format, ensuring compatibility with diverse medical image processing tools.
+
+### 2. Lung Segmentation Pipeline
+   The segmentation of lung images is critical, especially in the context of CT lung imaging with inherent variability due to breathing motion. To address this, segmentation masks are employed to define Regions of Interest (ROIs) with irregular shapes, focusing on dynamic lung aspects while considering static anatomical features.
+
+   - **Thresholding:**
+     - Analysis of voxel intensity histograms reveals intensities exceeding 800 are irrelevant for lung segmentation.
+     - Thresholding within the range of 0-800 is applied, creating a binary mask isolating potential lung regions.
+
+   - **Morphological Operations:**
+     - Closing and opening operations are applied to the binary mask to eliminate noisy voxels and refine the lung region.
+
+   - **Region of Interest (ROI):**
+     - Midpoints are identified to extract the lung region accurately, creating an essential lung mask.
+
+   - **Connected Components:**
+     - Labeling is performed to distinguish connected components within the binary lung mask, identifying primary lung areas.
+
+   - **Lung Masks and Segmentation:**
+     - Largest connected components are used to generate lung masks, producing a segmented image with isolated lung regions.
+
+### 3. Further Processing
+   - Steps involve normalizing intensities, enhancing contrast through Contrast-Limited Adaptive Histogram Equalization (CLAHE) [9], and rescaling segmented lung regions to their original intensity range.
+   - This method enhances the visibility and isolation of lung tissues, aiding medical professionals in analyzing and diagnosing various pulmonary conditions or diseases from CT scan data.
+
+The comprehensive segmentation workflow is visually illustrated in Figure 2, providing a clear guide to the intricate steps involved.
+
+<p align="center">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/9e835a4d-e931-407f-bf13-f582ce202146" width="700" alt="Pre-processed Image">
+</p>
+<p align="center">Figure 2: Proposed Pipeline for Image Pre-processing and Lung Segmentation.</p>
+
+## Intensity Based Registration
+
