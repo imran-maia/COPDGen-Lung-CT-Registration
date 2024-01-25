@@ -108,3 +108,34 @@ Two rounds of experiments were conducted with VoxelMorph:
   <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/e7e05eea-72cd-4a9b-828d-c60bac5a4daa" width="800" alt="Pre-processed Image">
 </p>
 <p align="center">Figure 4: Proposed Pipeline for Deep Learning Based Registration Using VoxelMorph.</p>
+
+
+# Results
+We conducted a comprehensive experiment to perform image registration, employing both an intensity-based approach and deep learning. The intensity-based registration was carried out in two phases: initially, using the original inhale and exhale images without any pre-processing, and subsequently, repeating the registration process using segmented lung images. In the realm of deep learning, two experiments were conducted as well. In the first, the VoxelMorph model was trained using preprocessed segmented lung images and then utilized for image registration. In the second experiment, a different approach was employed. Instead of using preprocessed images directly, the VoxelMorph model was trained with images that had already undergone registration using the elastix tool with different parameters. To assess the registration performance in all experiments, we computed the evaluation metric, Mean and Standard Deviation of Target Registration Error (TRE) in millimeters, as summarized in Tables 1, 2, and 3.
+
+<p align="center">Table 1: Analysis of Results without Pre-processing and Measurement of Target Registration Error (TRE) in (mm).</p>
+<p align="center">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/6890e57e-e80c-4a70-a436-059cc2b1b0a7" width="900" alt="Pre-processed Image">
+</p>
+
+<p align="center">Table 2: Analysis of Results with Pre-processing and Measurement of Target Registration Error (TRE) in (mm).</p>
+<p align="center">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/5fc3bba6-7345-4697-b55f-983cb7889bae" width="900" alt="Pre-processed Image">
+</p>
+
+
+<p align="center">Table 3: Analysis of Results with VoxelMorph and Measurement of Target Registration Error (TRE) in (mm).</p>
+<p align="center">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/5d813123-318a-459c-990e-be407c63531e" width="900" alt="Pre-processed Image">
+</p>
+
+<br>
+The results demonstrated that the intensity-based method, specifically the elastix-based registration utilizing affine and B-spline transformation parameters with pre-processed segmented lung images, exhibited superior performance. While the deep learning model, voxelMorph, exhibited potential, its performance was hindered by the limited volume of training data. Figure 4 (a) illustrates the statistical robustness of this approach through a box plot, reflecting the consistency and limited variability in TRE across multiple datasets of COPDgen. Furthermore, the visual comparison provided in Figure 4 (b) offers a clear depiction of the registration process, showcasing the fixed (inhale) image, moving (exhale) image, and the resulting aligned image post-registration. The images in both axial and coronal views reinforce the efficacy of the selected registration pipeline<br>.
+
+<br>
+<br>
+<p align="center">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/c0ad4dd8-34f0-4c79-a3ea-01d9a87b9b7d" width="400" alt="Pre-processed Image">
+  <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/2072781c-709b-4865-9017-6b710b70b743" width="400" alt="Pre-processed Image">
+</p>
+<p align="center">Figure 4: (a) Evaluation metric for the best model (b) Registration output (axial-coronal view) for the best model..</p>
