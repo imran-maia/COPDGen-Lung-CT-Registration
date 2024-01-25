@@ -130,7 +130,7 @@ We conducted a comprehensive experiment to perform image registration, employing
 </p>
 
 <br>
-The results demonstrated that the intensity-based method, specifically the elastix-based registration utilizing affine and B-spline transformation parameters with pre-processed segmented lung images, exhibited superior performance. While the deep learning model, voxelMorph, exhibited potential, its performance was hindered by the limited volume of training data. Figure 4 (a) illustrates the statistical robustness of this approach through a box plot, reflecting the consistency and limited variability in TRE across multiple datasets of COPDgen. Furthermore, the visual comparison provided in Figure 4 (b) offers a clear depiction of the registration process, showcasing the fixed (inhale) image, moving (exhale) image, and the resulting aligned image post-registration. The images in both axial and coronal views reinforce the efficacy of the selected registration pipeline<br>.
+The results demonstrated that the intensity-based method, specifically the elastix-based registration utilizing affine and B-spline transformation parameters with pre-processed segmented lung images, exhibited superior performance. While the deep learning model, voxelMorph, exhibited potential, its performance was hindered by the limited volume of training data. Figure 5 (a) illustrates the statistical robustness of this approach through a box plot, reflecting the consistency and limited variability in TRE across multiple datasets of COPDgen. Furthermore, the visual comparison provided in Figure 5 (b) offers a clear depiction of the registration process, showcasing the fixed (inhale) image, moving (exhale) image, and the resulting aligned image post-registration. The images in both axial and coronal views reinforce the efficacy of the selected registration pipeline<br>.
 
 <br>
 <br>
@@ -138,4 +138,4 @@ The results demonstrated that the intensity-based method, specifically the elast
   <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/c0ad4dd8-34f0-4c79-a3ea-01d9a87b9b7d" width="400" alt="Pre-processed Image">
   <img src="https://github.com/imran-maia/COPDGen-Lung-CT-Registration/assets/122020364/2072781c-709b-4865-9017-6b710b70b743" width="400" alt="Pre-processed Image">
 </p>
-<p align="center">Figure 4: (a) Evaluation metric for the best model (b) Registration output (axial-coronal view) for the best model..</p>
+<p align="center">Figure 5: (a) Evaluation metric for the best model (b) Registration output (axial-coronal view) for the best model..</p>
